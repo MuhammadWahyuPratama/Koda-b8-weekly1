@@ -7,7 +7,7 @@ function payment(rl, result) {
 
         if (pay < result) {
             console.log("Uang Tidak Cukup!");
-            return payment(rl, result);
+            return payment(rl,result);
         }
 
         console.log("\nMemproses pembayaran...");
