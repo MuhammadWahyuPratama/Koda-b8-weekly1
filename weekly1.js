@@ -1,7 +1,7 @@
 const readline = require("node:readline");
 const calculateResult = require("./utils/calculate");
 const menu = require("./data/menu");
-const payment = require("./services/payment");
+const checkout = require("./services/checkout");
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -53,7 +53,7 @@ function mainMenu() {
                     return mainMenu();
 
                 } else {
-                    checkout();
+                    checkout(cart, rl);
 
                 }
 
@@ -135,24 +135,7 @@ function showCart() {
 
 
 
-function checkout() {
 
-    console.log("\n===== PEMBAYARAN =====");
-
-    cart.forEach(({ name, qty, subtotal }, index) => {
-        console.log(
-            `${index + 1}. ${name}
-            Qty      : ${qty}
-            Subtotal : Rp.${subtotal}`
-        );
-    });
-
-    const result = calculateResult(cart);
-
-    console.log(`\nTotal Bayar : Rp.${result}`);
-
-    payment(rl, result);
-}
 
 mainMenu();
 
