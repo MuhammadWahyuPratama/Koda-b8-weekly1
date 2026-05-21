@@ -1,0 +1,20 @@
+{
+  "name": "esteh-indonesia",
+  "version": "1.0.0",
+  "description": "CLI cashier application for Esteh Indonesia",
+  "license": "MIT",
+  "author": "Muhammad Wahyu Pratama",
+  "type": "commonjs",
+  "main": "weekly1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node weekly1.js",
+    "lint": "eslint weekly1.js",
+    "lint:fix": "eslint weekly1.js --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0"
+  }
+}

@@ -193,7 +193,7 @@ function checkout() {
     cart.forEach(({ name, qty, subtotal }, index) => {
         console.log(
             `${index + 1}. ${name}
-            Qty : ${qty}
+            Qty      : ${qty}
             Subtotal : Rp.${subtotal}`
         );
     });
