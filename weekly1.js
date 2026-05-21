@@ -1,136 +1,140 @@
 const readline = require("node:readline");
+const askQuestion = require("./utils/quetions");
 const calculateResult = require("./utils/calculate");
 const menu = require("./data/menu");
 const checkout = require("./services/checkout");
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+  input: process.stdin,
+  output: process.stdout
 });
 
 console.clear();
 
-function mainMenu() {
-    console.log(`
+async function mainMenu() {
+
+  console.log(`
     **====**   Esteh Indonesia   **====**
 
         1.Daftar Menu
         2.Keranjang
         3.Pembayaran
         4.Keluar
-        `
-    );
+    `);
 
-    rl.question("Input : ", function (input) {
-        input = parseInt(input);
-        switch (input) {
-            case 1:
-                showMenu();
-                selectMenu();
-                break;
+  let input = await askQuestion(rl, "Input : ");
 
-            case 2:
+  input = parseInt(input);
 
-                if (cart.length === 0) {
+  switch (input) {
 
-                    console.log("\nKeranjang masih kosong!");
+  case 1:
+    showMenu();
+    await selectMenu();
+    break;
 
-                    return mainMenu();
+  case 2:
 
-                } else {
+    if (cart.length === 0) {
 
-                    showCart();
+      console.log("\nKeranjang masih kosong!");
 
-                }
+      return mainMenu();
 
-                break;
+    }
 
-            case 3:
+    showCart();
+    break;
 
-                if (cart.length === 0) {
+  case 3:
 
-                    console.log("\nBelum ada pesanan!");
+    if (cart.length === 0) {
 
-                    return mainMenu();
+      console.log("\nBelum ada pesanan!");
 
-                } else {
-                    checkout(cart, rl);
+      return mainMenu();
 
-                }
+    }
 
-                break;
+    checkout(cart, rl);
 
-            case 4:
-                console.log("Program Selesai");
-                rl.close();
-        }
-    });
+    break;
+
+  case 4:
+
+    console.log("Program selesai");
+
+    rl.close();
+
+  }
+
 }
 
 function showMenu() {
-    console.log("\n=== Daftar Menu ===");
-    for (let i = 0; i < menu.length; i++) {
-        console.log((i + 1) + ". " + menu[i].name + " - Rp." + menu[i].price + ".-");
-    }
+  console.log("\n=== Daftar Menu ===");
+  for (let i = 0; i < menu.length; i++) {
+    console.log((i + 1) + ". " + menu[i].name + " - Rp." + menu[i].price + ".-");
+  }
 }
 
 function selectMenu() {
-    rl.question("Mau Nomor Menu berapa : ", function (select) {
-        let i = parseInt(select) - 1;
-        if (!menu[i]) {
+  rl.question("Mau Nomor Menu berapa : ", function (select) {
+    let i = parseInt(select) - 1;
+    if (!menu[i]) {
 
-            console.log("\nMenu tidak tersedia!");
+      console.log("\nMenu tidak tersedia!");
 
-            showMenu();
-            selectMenu();
+      showMenu();
+      selectMenu();
 
-            return;
+      return;
+    }
+    console.log(menu[i]);
+
+    rl.question("Mau beli berapa :", function (quantity) {
+      let qty = parseInt(quantity);
+      let item = {
+        name: menu[i].name,
+        price: menu[i].price,
+        qty: qty,
+        subtotal: menu[i].price * qty
+      };
+
+      cart = [...cart, item];
+
+      console.log("\n Barang Berhasil Masuk Di Keranjang !!!");
+      console.log(cart);
+
+      rl.question("Ada Pesanan lagi y/n : ", function (add) {
+        if (add == "y") {
+          showMenu();
+          selectMenu();
+           
+        } else {
+          showCart();
         }
-        console.log(menu[i]);
-
-        rl.question("Mau beli berapa :", function (quantity) {
-            let qty = parseInt(quantity);
-            let item = {
-                name: menu[i].name,
-                price: menu[i].price,
-                qty: qty,
-                subtotal: menu[i].price * qty
-            };
-
-            cart = [...cart, item];
-
-            console.log("\n Barang Berhasil Masuk Di Keranjang !!!");
-            console.log(cart);
-
-            rl.question("Ada Pesanan lagi y/n : ", function (add) {
-                if (add == "y") {
-                    showMenu();
-                    selectMenu();
-                } else {
-                    showCart();
-                }
-            });
-        });
+      });
     });
+  });
 }
 
 let cart = [];
 
 function showCart() {
-    console.log("\n===== Keranjang =====");
+  console.log("\n===== Keranjang =====");
 
-    cart.forEach(({ name, qty, subtotal }, index) => {
+  cart.forEach(({ name, qty, subtotal }, index) => {
 
-        console.log(
-            `${index + 1}. ${name}
+    console.log(
+      `${index + 1}. ${name}
             Quantity : ${qty}
             Subtotal : Rp.${subtotal}`
-        );
+    );
 
-    });
-    const result = calculateResult(cart);
-    console.log("\n Total Belanja : Rp.", result);
+  });
+  const result = calculateResult(cart);
+  console.log("\n Total Belanja : Rp.", result);
 
-    mainMenu();
+  mainMenu();
 }
 
 
