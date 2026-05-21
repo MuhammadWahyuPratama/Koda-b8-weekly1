@@ -1,6 +1,7 @@
 const readline = require("node:readline");
 const calculateResult = require("./utils/calculate");
 const menu = require("./data/menu");
+const payment = require("./services/payment");
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -132,30 +133,7 @@ function showCart() {
     mainMenu();
 }
 
-function payment(result) {
-    rl.question("Masukkan Uang : Rp.", function (money) {
 
-        let pay = parseInt(money);
-        let remainingMoney = pay - result;
-
-        if (pay < result) {
-            console.log("Uang Tidak Cukup!");
-            return payment(result);
-        }
-
-        console.log("\nMemproses pembayaran...");
-
-        setTimeout(() => {
-            console.log("\n==== Pembayaran ====");
-            console.log(`Total : Rp.${result}`);
-            console.log(`Bayar : Rp.${pay}`);
-            console.log(`Kembalian : Rp.${remainingMoney}`);
-            console.log("Terima Kasih Pembayaran Berhasil !!!");
-            rl.close();
-        }, 2000);
-
-    });
-}
 
 function checkout() {
 
@@ -173,7 +151,7 @@ function checkout() {
 
     console.log(`\nTotal Bayar : Rp.${result}`);
 
-    payment(result);
+    payment(rl, result);
 }
 
 mainMenu();
