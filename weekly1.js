@@ -70,7 +70,7 @@ function mainMenu() {
 
                 } else {
 
-                    showCard();
+                    showCart();
 
                 }
 
@@ -138,7 +138,7 @@ function selectMenu() {
                     showMenu();
                     selectMenu();
                 } else {
-                    showCard();
+                    showCart();
                 }
             });
         });
@@ -147,7 +147,7 @@ function selectMenu() {
 
 let cart = [];
 
-function showCard() {
+function showCart() {
     console.log("\n===== Keranjang =====");
 
     cart.forEach(({ name, qty, subtotal }, index) => {
@@ -167,23 +167,27 @@ function showCard() {
 
 function payment(result) {
     rl.question("Masukkan Uang : Rp.", function (money) {
+
         let pay = parseInt(money);
         let remainingMoney = pay - result;
+
         if (pay < result) {
             console.log("Uang Tidak Cukup!");
-            payment(result);
-        } else {
-            console.log("\n==== Pembayaran ====");
-            console.log("Total : Rp.", + result);
-            console.log("Bayar : Rp.", + pay);
-            console.log("Kembalian : Rp.", + remainingMoney);
-            console.log("Terima Kasih Pembayaran Berhasil !!!");
-            rl.close();
+            return payment(result);
         }
 
-    }
-    );
+        console.log("\nMemproses pembayaran...");
 
+        setTimeout(() => {
+            console.log("\n==== Pembayaran ====");
+            console.log(`Total : Rp.${result}`);
+            console.log(`Bayar : Rp.${pay}`);
+            console.log(`Kembalian : Rp.${remainingMoney}`);
+            console.log("Terima Kasih Pembayaran Berhasil !!!");
+            rl.close();
+        }, 2000);
+
+    });
 }
 
 function checkout() {
