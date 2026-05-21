@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node weekly1.js",
     "lint": "eslint weekly1.js",
-    "lint:fix": "eslint weekly1.js --fix"
+    "lint:fix": "eslint weekly1.js ./utils/calculate.js ./utils/quetions.js ./services/checkout.js ./services/payment.js ./data/menu.js --fix"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
