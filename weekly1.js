@@ -190,24 +190,19 @@ function checkout() {
 
     console.log("\n===== PEMBAYARAN =====");
 
-    let result = 0;
-
-    for (let i = 0; i < cart.length; i++) {
-
+    cart.forEach(({ name, qty, subtotal }, index) => {
         console.log(
-            (i + 1) + ". " +
-            cart[i].name +
-            "\n Qty : " + cart[i].qty +
-            "\n Subtotal : Rp." + cart[i].subtotal
+            `${index + 1}. ${name}
+            Qty : ${qty}
+            Subtotal : Rp.${subtotal}`
         );
+    });
 
-        result += cart[i].subtotal;
-    }
+    const result = calculateResult(cart);
 
-    console.log("\nTotal Bayar : Rp." + result);
+    console.log(`\nTotal Bayar : Rp.${result}`);
 
     payment(result);
-
 }
 
 mainMenu();
