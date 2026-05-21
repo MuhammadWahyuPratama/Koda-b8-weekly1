@@ -1,5 +1,5 @@
 const readline = require("node:readline");
-const calculateTotal = require("./utils/calculate");
+const calculateResult = require("./utils/calculate");
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -57,12 +57,12 @@ function mainMenu() {
         switch (input) {
             case 1:
                 showMenu();
-                pilihMenu();
+                selectMenu();
                 break;
 
             case 2:
 
-                if (keranjang.length === 0) {
+                if (cart.length === 0) {
 
                     console.log("\nKeranjang masih kosong!");
 
@@ -70,7 +70,7 @@ function mainMenu() {
 
                 } else {
 
-                    tampilKeranjang();
+                    showCard();
 
                 }
 
@@ -78,7 +78,7 @@ function mainMenu() {
 
             case 3:
 
-                if (keranjang.length === 0) {
+                if (cart.length === 0) {
 
                     console.log("\nBelum ada pesanan!");
 
@@ -105,15 +105,15 @@ function showMenu() {
     }
 }
 
-function pilihMenu() {
-    rl.question("Mau Nomor Menu berapa : ", function (pilih) {
-        let i = parseInt(pilih) - 1;
+function selectMenu() {
+    rl.question("Mau Nomor Menu berapa : ", function (select) {
+        let i = parseInt(select) - 1;
         if (!menu[i]) {
 
             console.log("\nMenu tidak tersedia!");
 
             showMenu();
-            pilihMenu();
+            selectMenu();
 
             return;
         }
@@ -128,29 +128,29 @@ function pilihMenu() {
                 subtotal: menu[i].price * qty
             };
 
-            keranjang = [...keranjang, item];
+            cart = [...cart, item];
 
             console.log("\n Barang Berhasil Masuk Di Keranjang !!!");
-            console.log(keranjang);
+            console.log(cart);
 
             rl.question("Ada Pesanan lagi y/n : ", function (add) {
                 if (add == "y") {
                     showMenu();
-                    pilihMenu();
+                    selectMenu();
                 } else {
-                    tampilKeranjang();
+                    showCard();
                 }
             });
         });
     });
 }
 
-let keranjang = [];
+let cart = [];
 
-function tampilKeranjang() {
+function showCard() {
     console.log("\n===== Keranjang =====");
 
-    keranjang.forEach(({ name, qty, subtotal }, index) => {
+    cart.forEach(({ name, qty, subtotal }, index) => {
 
         console.log(
             `${index + 1}. ${name}
@@ -159,24 +159,24 @@ function tampilKeranjang() {
         );
 
     });
-    const total = calculateTotal(keranjang);
-    console.log("\n Total Belanja : Rp.", total);
+    const result = calculateResult(cart);
+    console.log("\n Total Belanja : Rp.", result);
 
     mainMenu();
 }
 
-function pembayaran(total) {
-    rl.question("Masukkan Uang : Rp.", function (uang) {
-        let bayar = parseInt(uang);
-        let kembalian = bayar - total;
-        if (bayar < total) {
+function payment(result) {
+    rl.question("Masukkan Uang : Rp.", function (money) {
+        let pay = parseInt(money);
+        let remainingMoney = pay - result;
+        if (pay < result) {
             console.log("Uang Tidak Cukup!");
-            pembayaran(total);
+            payment(result);
         } else {
             console.log("\n==== Pembayaran ====");
-            console.log("Total : Rp.", + total);
-            console.log("Bayar : Rp.", + bayar);
-            console.log("Kembalian : Rp.", + kembalian);
+            console.log("Total : Rp.", + result);
+            console.log("Bayar : Rp.", + pay);
+            console.log("Kembalian : Rp.", + remainingMoney);
             console.log("Terima Kasih Pembayaran Berhasil !!!");
             rl.close();
         }
@@ -190,23 +190,23 @@ function checkout() {
 
     console.log("\n===== PEMBAYARAN =====");
 
-    let total = 0;
+    let result = 0;
 
-    for (let i = 0; i < keranjang.length; i++) {
+    for (let i = 0; i < cart.length; i++) {
 
         console.log(
             (i + 1) + ". " +
-            keranjang[i].name +
-            "\n Qty : " + keranjang[i].qty +
-            "\n Subtotal : Rp." + keranjang[i].subtotal
+            cart[i].name +
+            "\n Qty : " + cart[i].qty +
+            "\n Subtotal : Rp." + cart[i].subtotal
         );
 
-        total += keranjang[i].subtotal;
+        result += cart[i].subtotal;
     }
 
-    console.log("\nTotal Bayar : Rp." + total);
+    console.log("\nTotal Bayar : Rp." + result);
 
-    pembayaran(total);
+    payment(result);
 
 }
 
