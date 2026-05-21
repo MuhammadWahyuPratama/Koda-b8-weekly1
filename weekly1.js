@@ -150,13 +150,12 @@ let keranjang = [];
 function tampilKeranjang() {
     console.log("\n===== Keranjang =====");
 
-    keranjang.forEach((item, index) => {
+    keranjang.forEach(({ name, qty, subtotal }, index) => {
 
         console.log(
-            (index + 1) + ". " +
-            item.name +
-            "\n Quantity : " + item.qty +
-            "\n Subtotal : Rp." + item.subtotal
+            `${index + 1}. ${name}
+            Quantity : ${qty}
+            Subtotal : Rp.${subtotal}`
         );
 
     });
