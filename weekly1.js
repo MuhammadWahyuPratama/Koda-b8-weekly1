@@ -76,54 +76,74 @@ function showMenu() {
   }
 }
 
-function selectMenu() {
-  rl.question("Mau Nomor Menu berapa : ", function (select) {
-    let i = parseInt(select) - 1;
-    if (isNaN(i + 1) || !menu[i]) {
-      console.log("\nMenu Tidak Tersedia!");
-      showMenu();
-      return selectMenu();
-    }
-    if (!menu[i]) {
+async function selectMenu() {
 
-      console.log("\nMenu tidak tersedia!");
+  let select = await askQuestion(
+    rl,
+    "Mau Nomor Menu berapa : "
+  );
 
-      showMenu();
-      selectMenu();
+  let i = parseInt(select) - 1;
 
-      return;
-    }
-    console.log(menu[i]);
+  if (
+    isNaN(i + 1) ||
+    !menu[i]
+  ) {
 
-    rl.question("Mau beli berapa :", function (quantity) {
-      let qty = parseInt(quantity);
-      if (isNaN(qty) || qty <= 0) {
-        console.log("\nJumlah Harus Berupa Angka!");
-        return selectMenu();
-      }
-      let item = {
-        name: menu[i].name,
-        price: menu[i].price,
-        qty: qty,
-        subtotal: menu[i].price * qty
-      };
+    console.log("\nMenu tidak tersedia!");
 
-      cart = [...cart, item];
+    showMenu();
 
-      console.log("\n Barang Berhasil Masuk Di Keranjang !!!");
-      console.log(cart);
+    return selectMenu();
+  }
 
-      rl.question("Ada Pesanan lagi y/n : ", function (add) {
-        if (add == "y") {
-          showMenu();
-          selectMenu();
+  console.log(menu[i]);
 
-        } else {
-          showCart();
-        }
-      });
-    });
-  });
+  let quantity = await askQuestion(
+    rl,
+    "Mau beli berapa : "
+  );
+
+  let qty = parseInt(quantity);
+
+  if (
+    isNaN(qty) ||
+    qty <= 0
+  ) {
+
+    console.log(
+      "\nJumlah harus berupa angka!"
+    );
+
+    return selectMenu();
+  }
+
+  let item = {
+    name: menu[i].name,
+    price: menu[i].price,
+    qty,
+    subtotal: menu[i].price * qty
+  };
+
+  cart = [...cart, item];
+
+  console.log(
+    "\nBarang berhasil masuk ke keranjang!"
+  );
+
+  let add = await askQuestion(
+    rl,
+    "Ada pesanan lagi y/n : "
+  );
+
+  if (add === "y") {
+
+    showMenu();
+
+    return selectMenu();
+  }
+
+  showCart();
 }
 
 let cart = [];
