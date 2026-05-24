@@ -79,6 +79,11 @@ function showMenu() {
 function selectMenu() {
   rl.question("Mau Nomor Menu berapa : ", function (select) {
     let i = parseInt(select) - 1;
+    if (isNaN(i + 1) || !menu[i]) {
+      console.log("\nMenu Tidak Tersedia!");
+      showMenu();
+      return selectMenu();
+    }
     if (!menu[i]) {
 
       console.log("\nMenu tidak tersedia!");
@@ -92,6 +97,10 @@ function selectMenu() {
 
     rl.question("Mau beli berapa :", function (quantity) {
       let qty = parseInt(quantity);
+      if (isNaN(qty) || qty <= 0) {
+        console.log("\nJumlah Harus Berupa Angka!");
+        return selectMenu();
+      }
       let item = {
         name: menu[i].name,
         price: menu[i].price,
@@ -108,7 +117,7 @@ function selectMenu() {
         if (add == "y") {
           showMenu();
           selectMenu();
-           
+
         } else {
           showCart();
         }
