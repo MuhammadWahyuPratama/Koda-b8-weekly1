@@ -135,8 +135,12 @@ async function selectMenu() {
     rl,
     "Ada pesanan lagi y/n : "
   );
+  if (add !== "y" && add !== "n") {
+    console.log("Input hanya y atau n");
+    return selectMenu();
+  }
 
-  if (add === "y") {
+  if (add === "y" ) {
 
     showMenu();
 
@@ -144,6 +148,7 @@ async function selectMenu() {
   }
 
   showCart();
+
 }
 
 let cart = [];
@@ -165,10 +170,6 @@ function showCart() {
 
   mainMenu();
 }
-
-
-
-
 
 mainMenu();
 
