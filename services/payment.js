@@ -1,9 +1,9 @@
-
+const validatePayment = require("../utils/validate-payment");
 function payment(rl, result) {
   rl.question("Masukkan Uang : Rp.", function (money) {
 
-    let pay = parseInt(money);
-    if (isNaN(pay) || pay <= 0) {
+    const pay = parseInt(money);
+    if (!validatePayment(money)) {
       console.log("\n Masukan Nominal yang valid!");
       return payment(rl,result);
     }
