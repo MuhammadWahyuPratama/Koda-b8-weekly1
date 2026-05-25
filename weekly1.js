@@ -24,7 +24,10 @@ async function mainMenu() {
   let input = await askQuestion(rl, "Input : ");
 
   input = parseInt(input);
-
+  if (isNaN(input) || input < 1 || input > 4) {
+    console.log("Pilihan Menu Tidak Tersedia!!");
+    return mainMenu();
+  }
   switch (input) {
 
   case 1:
@@ -99,23 +102,28 @@ async function selectMenu() {
 
   console.log(menu[i]);
 
-  let quantity = await askQuestion(
-    rl,
-    "Mau beli berapa : "
-  );
+  let qty;
 
-  let qty = parseInt(quantity);
+  while (true) {
 
-  if (
-    isNaN(qty) ||
-    qty <= 0
-  ) {
-
-    console.log(
-      "\nJumlah harus berupa angka!"
+    let quantity = await askQuestion(
+      rl,
+      "Mau beli berapa : "
     );
 
-    return selectMenu();
+    qty = Number(quantity);
+
+    if (
+      Number.isInteger(qty) &&
+    qty > 0
+    ) {
+      break;
+    }
+
+    console.log(
+      "\nJumlah harus berupa angka lebih dari 0!!"
+    );
+
   }
 
   let item = {
