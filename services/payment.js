@@ -3,8 +3,12 @@ function payment(rl, result) {
   rl.question("Masukkan Uang : Rp.", function (money) {
 
     let pay = parseInt(money);
-    let remainingMoney = pay - result;
+    if (isNaN(pay) || pay <= 0) {
+      console.log("\n Masukan Nominal yang valid!");
+      return payment(rl,result);
+    }
 
+    let remainingMoney = pay - result;
     if (pay < result) {
       console.log("Uang Tidak Cukup!");
       return payment(rl,result);
