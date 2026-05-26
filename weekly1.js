@@ -4,6 +4,7 @@ const calculateResult = require("./utils/calculate");
 const menu = require("./data/menu");
 const checkout = require("./services/checkout");
 const validateMenu = require("./utils/validate-menu");
+const validateQty = require("./utils/validate-qty");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -114,10 +115,8 @@ async function selectMenu() {
 
     qty = Number(quantity);
 
-    if (
-      Number.isInteger(qty) &&
-    qty > 0
-    ) {
+    if (validateQty(quantity)) {
+
       break;
     }
 
@@ -149,7 +148,7 @@ async function selectMenu() {
     return selectMenu();
   }
 
-  if (add === "y" ) {
+  if (add === "y") {
 
     showMenu();
 
