@@ -6,19 +6,23 @@
  */
 
 const validatePayment = require("../utils/validate-payment");
+const processPayment = require("../utils/processPayment");
 function payment(rl, result) {
   rl.question("Masukkan Uang : Rp.", function (money) {
 
     const pay = parseInt(money);
     if (!validatePayment(money)) {
       console.log("\n Masukan Nominal yang valid!");
-      return payment(rl,result);
+      return payment(rl, result);
     }
+    const remainingMoney = processPayment(
+      pay,
+      result
+    );
 
-    let remainingMoney = pay - result;
-    if (pay < result) {
+    if (remainingMoney === null) {
       console.log("Uang Tidak Cukup!");
-      return payment(rl,result);
+      return payment(rl, result);
     }
 
     console.log("\nMemproses pembayaran...");
