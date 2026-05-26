@@ -5,6 +5,7 @@ const menu = require("./data/menu");
 const checkout = require("./services/checkout");
 const validateMenu = require("./utils/validate-menu");
 const validateQty = require("./utils/validate-qty");
+const validateYesNo = require("./utils/validate-y-n");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -143,7 +144,7 @@ async function selectMenu() {
     rl,
     "Ada pesanan lagi y/n : "
   );
-  if (add !== "y" && add !== "n") {
+  if (!validateYesNo(add)) {
     console.log("Input hanya y atau n");
     return selectMenu();
   }
