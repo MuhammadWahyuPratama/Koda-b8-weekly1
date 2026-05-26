@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param {object} rl readline interface
+ * @param {number} result total amount to pay
+ * @returns {void}
+ */
+
 const validatePayment = require("../utils/validate-payment");
 function payment(rl, result) {
   rl.question("Masukkan Uang : Rp.", function (money) {
