@@ -11,7 +11,7 @@
     "test:coverage": "node --test --experimental-test-coverage",
     "start": "node weekly1.js",
     "lint": "eslint weekly1.js",
-    "lint:fix": "eslint weekly1.js ./utils/calculate.js ./utils/quetions.js ./services/checkout.js ./services/payment.js ./data/menu.js --fix ./test/checkout.test.js"
+    "lint:fix": "eslint weekly1.js ./utils/calculate.js ./utils/questions.js ./services/checkout.js ./services/payment.js ./data/menu.js --fix ./test/validateCalculate.test.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

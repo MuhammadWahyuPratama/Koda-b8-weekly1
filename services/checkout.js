@@ -10,17 +10,16 @@
 
 const calculateResult = require("../utils/calculate");
 const payment = require("./payment");
+const formatCheckout = require("../utils/formatCheckout");
 
 function checkout(cart, rl) {
 
   console.log("\n===== PEMBAYARAN =====");
 
-  cart.forEach(({ name, qty, subtotal }, index) => {
+  cart.forEach((item,index) => {
 
     console.log(
-      `${index + 1}. ${name}
-            Qty      : ${qty}
-            Subtotal : Rp.${subtotal}`
+      formatCheckout(item, index)
     );
 
   });

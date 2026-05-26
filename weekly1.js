@@ -36,43 +36,43 @@ async function mainMenu() {
   }
   switch (input) {
 
-    case 1:
-      showMenu();
-      await selectMenu();
-      break;
+  case 1:
+    showMenu();
+    await selectMenu();
+    break;
 
-    case 2:
+  case 2:
 
-      if (cart.length === 0) {
+    if (cart.length === 0) {
 
-        console.log("\nKeranjang masih kosong!");
+      console.log("\nKeranjang masih kosong!");
 
-        return mainMenu();
+      return mainMenu();
 
-      }
+    }
 
-      showCart();
-      break;
+    showCart();
+    break;
 
-    case 3:
+  case 3:
 
-      if (cart.length === 0) {
+    if (cart.length === 0) {
 
-        console.log("\nBelum ada pesanan!");
+      console.log("\nBelum ada pesanan!");
 
-        return mainMenu();
+      return mainMenu();
 
-      }
+    }
 
-      checkout(cart, rl);
+    checkout(cart, rl);
 
-      break;
+    break;
 
-    case 4:
+  case 4:
 
-      console.log("Program selesai");
+    console.log("Program selesai");
 
-      rl.close();
+    rl.close();
 
   }
 
