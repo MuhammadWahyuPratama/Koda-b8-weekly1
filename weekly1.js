@@ -12,7 +12,10 @@ const rl = readline.createInterface({
 });
 
 console.clear();
-
+/**
+ * display main menu and handles
+ * @returns {Promise<void>}
+ */
 async function mainMenu() {
 
   console.log(`
@@ -75,12 +78,25 @@ async function mainMenu() {
 
 }
 
+/**
+ * display avalaible drink menu
+ * 
+ * @return {void}
+ */
+
 function showMenu() {
   console.log("\n=== Daftar Menu ===");
   for (let i = 0; i < menu.length; i++) {
     console.log((i + 1) + ". " + menu[i].name + " - Rp." + menu[i].price + ".-");
   }
 }
+
+/**
+ * Handles Menu selection,quantity input,
+ * and adds, selected items into card.
+ * 
+ * @returns 
+ */
 
 async function selectMenu() {
 
@@ -114,10 +130,8 @@ async function selectMenu() {
       "Mau beli berapa : "
     );
 
-    qty = Number(quantity);
-
     if (validateQty(quantity)) {
-
+      qty = Number(quantity);
       break;
     }
 
@@ -161,6 +175,13 @@ async function selectMenu() {
 }
 
 let cart = [];
+
+/**
+ * Display all cart items and 
+ * total purchase amount.
+ * 
+ * @return{void}
+ */
 
 function showCart() {
   console.log("\n===== Keranjang =====");
