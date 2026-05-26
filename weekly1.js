@@ -3,6 +3,7 @@ const askQuestion = require("./utils/quetions");
 const calculateResult = require("./utils/calculate");
 const menu = require("./data/menu");
 const checkout = require("./services/checkout");
+const validateMenu = require("./utils/validate-menu");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -24,7 +25,7 @@ async function mainMenu() {
   let input = await askQuestion(rl, "Input : ");
 
   input = parseInt(input);
-  if (isNaN(input) || input < 1 || input > 4) {
+  if (!validateMenu(input)) {
     console.log("Pilihan Menu Tidak Tersedia!!");
     return mainMenu();
   }
