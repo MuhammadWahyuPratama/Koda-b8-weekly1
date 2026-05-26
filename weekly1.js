@@ -1,5 +1,5 @@
 const readline = require("node:readline");
-const askQuestion = require("./utils/quetions");
+const askQuestion = require("./utils/questions");
 const calculateResult = require("./utils/calculate");
 const menu = require("./data/menu");
 const checkout = require("./services/checkout");
