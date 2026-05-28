@@ -6,6 +6,7 @@ const checkout = require("./services/checkout");
 const validateMenu = require("./utils/validate-menu");
 const validateQty = require("./utils/validate-qty");
 const validateYesNo = require("./utils/validate-y-n");
+const formatCart = require("./utils/formatCart");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -186,12 +187,9 @@ let cart = [];
 function showCart() {
   console.log("\n===== Keranjang =====");
 
-  cart.forEach(({ name, qty, subtotal }, index) => {
+  cart.forEach((item,index ) => {
 
-    console.log(
-      `${index + 1}. ${name}
-            Quantity : ${qty}
-            Subtotal : Rp.${subtotal}`
+    console.log(formatCart(item,index)
     );
 
   });
